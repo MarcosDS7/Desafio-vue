@@ -37,7 +37,12 @@ ul, ol, a{
   margin: 0 auto;
   box-sizing: border-box;
 }
-
+.outiline-none{
+  outline: none;
+}
+.text-poppins{
+font-family: 'Poppins', sans-serif;
+}
 .text-blue-dark{
 color: #2F3676;
 }
@@ -54,3 +59,29 @@ color: #101010;
 background-color: #2F3676;
 }
 </style>
+<script>
+
+import Vue from 'vue';
+import Meta from 'vue-meta';
+
+Vue.use(Meta);
+
+
+export default {
+    name: 'App',
+    metaInfo: {
+      title: 'Desafio | Seja bem mestre!',
+      // override the parent template and just use the above title only
+      titleTemplate: '%s ← Home',
+      htmlAttrs: {
+      lang: 'en-US'
+    },
+    meta: [
+      { charset: 'utf-8' },
+      { name: 'description', content: 'Aqui você encontra um desafio proposto pelo meu professor!' },
+      { name: 'viewport', content: 'width=device-width, initial-scale=1' }
+    ]
+  }
+  
+}
+</script>
