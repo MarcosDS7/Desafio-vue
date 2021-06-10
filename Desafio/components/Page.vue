@@ -73,8 +73,111 @@
 </main>
 </template>
 
-<style scoped>
 
+<script>
+export default {
+  data() {
+    return {
+      CheckedStickers: [],
+      More: 0,
+      less: 0,
+      CountInput: 0,
+      active: true,
+      text: '',
+      result: '',
+      error: false,
+      sucess: false,
+    }
+  },methods: {
+ 
+    ContMore(){
+    this.CountInput += this.More + 1  
+    this.active = false
+    },
+    ContLess(){
+    if(this.CountInput >= 1){
+    this.CountInput += this.less - 1
+    }
+    },
+    SendForm(){
+      if(!this.CheckedStickers.length){ 
+      this.result = "Escolha pelo menos um Sticker"
+      this.error = true
+      this.sucess = false
+      }
+      if(this.CountInput < 1){
+        this.result = "Coloque pelo menos 1 Sticker"
+        this.error = true
+        this.sucess = false
+      }else{
+        this.result = "Formulário Enviado com sucesso"
+         this.error = false
+         this.sucess = true
+
+         this.CountInput = 0
+         this.text = ''
+         this.CheckedStickers = []
+      }
+    }
+  },
+}
+</script>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;600;700;900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600&display=swap');
+/* font-family: 'Cairo', sans-serif; */
+/* font-family: 'Poppins', sans-serif; */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+body{
+font-family: 'Cairo', sans-serif;
+color: #2F3676;  
+}
+
+
+img{
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+ul, ol, a{
+  text-decoration: none;
+  list-style: none;
+  color: #2F3676;
+}
+.containerX{
+  width: 960px;
+  margin: 0 auto;
+  box-sizing: border-box;
+}
+.outiline-none{
+  outline: none;
+}
+.text-poppins{
+font-family: 'Poppins', sans-serif;
+}
+.text-blue-dark{
+color: #2F3676;
+}
+.text-white{
+color: #ffffff;
+}
+.text-black{
+color: #101010;
+}
+.bg-gray{
+  background-color: #DDE3E9;
+}
+.bg-blue-dark{
+background-color: #2F3676;
+}
+/* ------------------------ */
 header{
   height: 25.125rem;
   background-image: url("../assets/banner.svg");
@@ -157,52 +260,3 @@ input[type="checkbox"]:checked::after {
   }
 }
 </style>
-
-<script>
-export default {
-  data() {
-    return {
-      CheckedStickers: [],
-      More: 0,
-      less: 0,
-      CountInput: 0,
-      active: true,
-      text: '',
-      result: '',
-      error: false,
-      sucess: false,
-    }
-  },methods: {
- 
-    ContMore(){
-    this.CountInput += this.More + 1  
-    this.active = false
-    },
-    ContLess(){
-    if(this.CountInput >= 1){
-    this.CountInput += this.less - 1
-    }
-    },
-    SendForm(){
-      if(!this.CheckedStickers.length){ 
-      this.result = "Escolha pelo menos um Sticker"
-      this.error = true
-      this.sucess = false
-      }
-      if(this.CountInput < 1){
-        this.result = "Coloque pelo menos 1 Sticker"
-        this.error = true
-        this.sucess = false
-      }else{
-        this.result = "Formulário Enviado com sucesso"
-         this.error = false
-         this.sucess = true
-
-         this.CountInput = 0
-         this.text = ''
-         this.CheckedStickers = []
-      }
-    }
-  },
-}
-</script>
