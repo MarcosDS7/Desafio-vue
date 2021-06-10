@@ -20,17 +20,17 @@
 
     <form>
       <fieldset class="flex items-center mb-2" title="React">
-        <input class="mb-1" type="checkbox" name="react" id="react" value="react">
+        <input class="mb-1" type="checkbox" name="react" id="react" value="react" v-model="CheckedStickers">
         <label for="react" class="ml-4 text-xl">React</label>
       </fieldset>
 
       <fieldset class="flex items-center mb-2" title="Vue">
-        <input class="mb-1" type="checkbox" name="vue" id="vue" value="vue">
+        <input class="mb-1" type="checkbox" name="vue" id="vue" value="vue" v-model="CheckedStickers">
         <label for="vue" class="ml-4 text-xl">Vue</label>
       </fieldset>
 
       <fieldset class="flex items-center mb-2" title="Angular">
-        <input class="mb-1" type="checkbox" name="angular" id="angular" value="angular">
+        <input class="mb-1" type="checkbox" name="angular" id="angular" value="angular" v-model="CheckedStickers">
         <label for="angular" class="ml-4 text-xl">Angular</label>
       </fieldset>
     </form>
@@ -43,9 +43,9 @@
     <h2 class="text-blue-dark text-2xl mb-2 text-poppins font-semibold">Quantos stickers de cada?</h2>
 
   <section class="flex items-center counter">
-    <button class="outiline-none flex items-center justify-center count" title="Subtrair">-</button>
-    <input class="outiline-none p-2 mx-3 rounded border border-indigo-500 bg-gray-50" type="text">
-    <button class="outiline-none flex items-center justify-center count" title="Somar">+</button>
+    <button v-bind:class="{disabled: active}" @click="ContLess()" class="outiline-none flex items-center justify-center count" title="Subtrair">-</button>
+    <input v-model="CountInput" class="outiline-none p-2 mx-3 rounded border border-indigo-500 bg-gray-50" type="text">
+    <button @click="ContMore()" class="outiline-none flex items-center justify-center count" title="Somar">+</button>
   </section>
 
   </div>
@@ -56,7 +56,7 @@
   <div class="containerX">
     <h2 class="text-blue-dark text-2xl mb-2 text-poppins font-semibold">Observações:</h2>
 
-    <textarea class="outiline-none border border-indigo-500 p-2 w-full sm:w-3/4 bg-gray-50 rounded text-2xl" name="" id="">
+    <textarea v-model="text" class="outiline-none border border-indigo-500 p-2 w-full sm:w-3/4 bg-gray-50 rounded text-2xl" name="" id="">
     </textarea>
 
   </div>
@@ -65,8 +65,8 @@
 <!-- Resultado  -->
 <footer class="flex justify-center items-center p-4 py-5 h-36 bg-gray-50" title="Resultado">
   <div class="containerX flex flex-col sm:flex-row justify-between items center">
-    <p class="text-green-600 font-semibold text-2xl text-poppins">Formulário enviado com sucesso!</p>
-    <button class="bg-blue-dark text-white rounded p-3 w-32 mt-3 sm:mt-0 outiline-none">Enviar</button>
+    <p :v-model="result" v-bind:class="{errorColor: error, sucessColor: sucess}" class=" font-semibold text-2xl text-poppins">{{ result }}</p>
+    <button @click="SendForm()" class="bg-blue-dark text-white rounded p-3 w-32 mt-3 sm:mt-0 outiline-none">Enviar</button>
   </div>
 </footer>
 
@@ -130,7 +130,15 @@ input[type="checkbox"]:checked::after {
 .efect{
   animation: Efect linear infinite 4s;
 }
-
+.disabled{
+  background-color: #999999;
+}
+.errorColor{
+  color: #700;
+}
+.sucessColor{
+  color: #070;
+}
 @keyframes Efect{
   0% {
     transform: translateY(0%);
@@ -152,6 +160,49 @@ input[type="checkbox"]:checked::after {
 
 <script>
 export default {
-  
+  data() {
+    return {
+      CheckedStickers: [],
+      More: 0,
+      less: 0,
+      CountInput: 0,
+      active: true,
+      text: '',
+      result: '',
+      error: false,
+      sucess: false,
+    }
+  },methods: {
+ 
+    ContMore(){
+    this.CountInput += this.More + 1  
+    this.active = false
+    },
+    ContLess(){
+    if(this.CountInput >= 1){
+    this.CountInput += this.less - 1
+    }
+    },
+    SendForm(){
+      if(!this.CheckedStickers.length){ 
+      this.result = "Escolha pelo menos um Sticker"
+      this.error = true
+      this.sucess = false
+      }
+      if(this.CountInput < 1){
+        this.result = "Coloque pelo menos 1 Sticker"
+        this.error = true
+        this.sucess = false
+      }else{
+        this.result = "Formulário Enviado com sucesso"
+         this.error = false
+         this.sucess = true
+
+         this.CountInput = 0
+         this.text = ''
+         this.CheckedStickers = []
+      }
+    }
+  },
 }
 </script>
